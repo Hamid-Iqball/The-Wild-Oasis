@@ -2,6 +2,8 @@ import styled, { css } from "styled-components";
 
 const Row = styled.div`
   display: flex;
+  gap: 1rem;
+  flex-direction: column;
   ${(props) =>
     props.type === "horizontal" &&
     css`
