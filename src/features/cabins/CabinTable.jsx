@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
 import { useCabin } from "./useCabin";
+import { useId } from "react";
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
 
