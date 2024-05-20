@@ -1,6 +1,14 @@
-import { cloneElement, createContext, useContext, useState } from "react";
+import {
+  cloneElement,
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { createPortal } from "react-dom";
 import { HiXMark } from "react-icons/hi2";
+import { TbRuler } from "react-icons/tb";
 import styled from "styled-components";
 
 const StyledModal = styled.div`
@@ -75,15 +83,31 @@ function Open({ children, opens: opensWindowName }) {
 
 function Window({ children, name }) {
   const { openName, close } = useContext(ModalContext);
+  const ref = useRef();
+
+  useEffect(
+    function () {
+      function handleClick(e) {
+        if (ref.current && !ref.current.contains(e.target)) {
+          close();
+        }
+      }
+
+      document.addEventListener("click", handleClick, true);
+      return () => document.removeEventListener("click", handleClick);
+    },
+    [close]
+  );
 
   if (name !== openName) return null;
+
   return createPortal(
     <Overlay>
-      <StyledModal>
+      <StyledModal ref={ref}>
         <Button onClick={close}>
           <HiXMark />
         </Button>
-        <div>{cloneElement(children, { onclose: close })}</div>
+        <div>{cloneElement(children, { onClose: close })}</div>
       </StyledModal>
       ;
     </Overlay>,
