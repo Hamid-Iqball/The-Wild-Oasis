@@ -34,6 +34,8 @@ const FilterButton = styled.button`
     color: var(--color-brand-50);
   }
 `;
+
+// 1. Filter
 function Filter({ filterField, options }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentFilter = searchParams.get(filterField) || options[0].value;
@@ -41,12 +43,16 @@ function Filter({ filterField, options }) {
     searchParams.set(filterField, value);
     setSearchParams(searchParams);
   }
+
+  // 2.Sorting
+
   return (
     <StyledFilter>
       {options.map((option) => (
         <FilterButton
           onClick={() => handleClick(option.value)}
           active={option.value === currentFilter}
+          disabled={option.value === currentFilter}
         >
           {option.label}{" "}
         </FilterButton>
